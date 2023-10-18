@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+a {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+body {
+  min-height: 100%;
+  line-height: 16px;
+  font-family: $font-primary;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1432px;
+  width: 100%;
+  padding-inline: 24px;
+  margin-inline: auto;
+
+  @media screen and (min-width: $breakpoint-sm) {
+    padding-inline: 48px;
+  }
+
+  @media screen and (min-width: $breakpoint-md) {
+    padding-inline: 128px;
+  }
+}
