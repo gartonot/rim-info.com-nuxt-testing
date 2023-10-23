@@ -15,7 +15,8 @@
   const props = defineProps<IProps>()
   const { characters } = toRefs(props)
   const emit = defineEmits<{
-    sorted: [string]
+    sorted: [string],
+    'view-character': [number]
   }>()
 
   let headers = reactive<IHeader[]>([
