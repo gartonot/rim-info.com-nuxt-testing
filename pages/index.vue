@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-  import { computed, ref, useNuxtApp } from '#imports'
+  import { useNuxtApp } from '#imports'
+  import { ref, computed, reactive } from "vue"
   import TheLogo from '~/components/TheLogo.vue'
   import TableRows from '~/components/TableRows/TableRows.vue'
   import TableCards from '~/components/TableCards/TableCards.vue'
@@ -9,16 +10,29 @@
   import AppModal from '~/components/ui/AppModal.vue'
   import CharacterMoreCard from '~/components/CharacterMoreCard.vue'
 
-  const { $viewport } = useNuxtApp()
+  interface IColumnSort  {
+    type: string
+    sort: string
+  }
 
+  const { $viewport } = useNuxtApp()
   const isMobile = computed(() => {
     return $viewport.isLessThan('md')
   })
-
   const modalIsShown = ref(false)
   const currentCharacter = ref<ICharacter | null>(null)
+  let characters = reactive([])
 
-  let characters: ICharacter[] = await charactersRepository.fetchCharacters()
+
+  const getPage = async (page: string | null) => {
+    if(page){
+      const { results, info } =  await charactersRepository.fetchCharacters(page)
+      characters.push(...results)
+      getPage(info.next)
+    }
+  }
+
+  getPage('https://rickandmortyapi.com/api/character')
 
   const sortCallback = (a: ICharacter, b: ICharacter, sort = 'asc') => {
     if (sort === 'asc') {
@@ -28,10 +42,11 @@
     }
   }
 
-  const columnSort = ({ type, sort }: { type: string; sort: string }) => {
+  const columnSort = ({ type, sort }: IColumnSort) => {
     characters = characters.sort((a: ICharacter, b: ICharacter) => {
-      const currentItem = type === 'origin' ? a[type].name : a[type]
-      const nextItem = type === 'origin' ? b[type].name : b[type]
+      const typeIsOrigin = type === 'origin'
+      const currentItem = typeIsOrigin ? a[type].name : a[type]
+      const nextItem = typeIsOrigin ? b[type].name : b[type]
 
       return sortCallback(currentItem, nextItem, sort)
     })

@@ -1,3 +1,3 @@
-import { ICharacter } from './ICharacter'
+import { ICharacter, ICharacterResponse } from './ICharacter'
 
-export { ICharacter }
+export { ICharacter, ICharacterResponse }

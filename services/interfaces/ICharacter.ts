@@ -1,3 +1,10 @@
+export interface ICharacterInfo {
+  count: number
+  pages: number
+  next: string | null
+  prev: string | null
+}
+
 export interface ICharacterOrigin {
   name: string
   url: string
@@ -21,4 +28,9 @@ export interface ICharacter {
   episode: string[]
   url: string
   created: string
+}
+
+export interface ICharacterResponse {
+  info: ICharacterInfo
+  results: ICharacter[]
 }

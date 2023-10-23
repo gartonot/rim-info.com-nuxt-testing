@@ -10,7 +10,7 @@ export default class Http {
   constructor(baseUrl: string) {
     this.get = (url, query) => {
       const queryString = query ? `?${stringify(query)}` : ''
-      return useFetch(baseUrl + url + queryString)
+      return useFetch(url + queryString)
     }
     this.post = url => useFetch(baseUrl + url, { method: 'post' })
     this.put = url => useFetch(baseUrl + url, { method: 'put' })

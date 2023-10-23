@@ -1,10 +1,10 @@
 import { useNuxtApp } from '#imports'
-import { ICharacter } from '~/services/interfaces'
+import { ICharacterResponse } from '~/services/interfaces'
 
 export default {
-  fetchCharacters: async () => {
+  fetchCharacters: async (url: string) => {
     const { $http } = useNuxtApp()
-    const { data } = await $http.get('/api/character')
-    return data.value.results as ICharacter[]
+    const { data } = await $http.get(url)
+    return data.value as ICharacterResponse
   }
 }
